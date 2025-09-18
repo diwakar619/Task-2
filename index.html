@@ -78,10 +78,10 @@ const weatherdetails = async (name) => {
         document.querySelector("#humidity").innerHTML = data.main.humidity + "%";
         document.querySelector("#wind").innerHTML = data.wind.speed + " km/h";
 
-        // ✅ hide error if valid city
+
         document.querySelector("#error").style.display = "none";
     } else {
-        // ✅ show error only when invalid city
+ 
         document.querySelector("#error").style.display = "block";
         document.querySelector("#error").innerHTML = "City name is invalid";
     }
@@ -134,4 +134,5 @@ document.querySelector(".input button").addEventListener("click", () => {
 </script>
 
 </body>
+
 </html>
