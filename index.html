@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Bitcount+Grid+Double:wght@100..900&family=Cabin:ital,wght@0,400..700;1,400..700&family=Dancing+Script:wght@400..700&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Lobster&family=Manufacturing+Consent&family=Merienda:wght@300..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Oleo+Script:wght@400;700&family=Permanent+Marker&family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Sevillana&family=Tagesschrift&display=swap" rel="stylesheet">
+</head>
+<body>
+
+ 
+    <div class="main">
+
+        <div class="box">
+
+
+            <div class="input">
+                <input type="search" placeholder="Enter your city name" spellcheck="false">
+                <button><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+
+            <div class="weatherdetails">
+            
+                <div class="mainweather">
+                    <h1 id="City">Banglore</h1>
+                    <img id="weather-icon" src="images/clear.png" alt="Weather Icon">
+                    <!-- <img src="images/clouds.png" alt=""> -->
+                    <h1 id="temp">23°</h1>
+                    <p id="description">Heavy intense rain</p>
+                </div>
+
+                <div class="twocolumns">
+
+                    <div class="inner">
+                        <div class="humidity">
+                            <img src="images/humidity.png" alt="">
+                            <h1 id="humidity">30%</h1>
+                            <p>Humidity</p>
+                        </div>
+                    </div>
+
+                    <div class="inner">
+                        <div class="wind">
+                            <img src="images/wind.png" alt="">
+                            <h1 id="wind">90 kmph</h1>
+                            <p>Wind Speed</p>
+                        </div>
+                    </div>
+
+
+                
+                </div>
+
+            </div>
+
+           <p id="error" style="display:none; color:red;">City name is invalid</p>
+        </div>
+    </div>
+
+<!-- <script>
+const weatherdetails = async (name) => {
+    const apiKey = "f840528079bd6f4f09622d886162fa4e"; 
+    const apiurl = `https://api.openweathermap.org/data/2.5/weather?q=${name}&appid=${apiKey}&units=metric`;
+
+    const res = await fetch(apiurl);
+    const data = await res.json();
+
+    console.log(data);
+
+    if (data.cod === 200) {
+        document.querySelector("#City").innerHTML = data.name;
+        document.querySelector("#temp").innerHTML = data.main.temp + "°C";
+        document.querySelector("#description").innerHTML = data.weather[0].description;
+        document.querySelector("#humidity").innerHTML = data.main.humidity + "%";
+        document.querySelector("#wind").innerHTML = data.wind.speed + " km/h";
+
+        // ✅ hide error if valid city
+        document.querySelector("#error").style.display = "none";
+    } else {
+        // ✅ show error only when invalid city
+        document.querySelector("#error").style.display = "block";
+        document.querySelector("#error").innerHTML = "City name is invalid";
+    }
+}
+
+document.querySelector(".input button").addEventListener("click", () => {
+    const location = document.querySelector(".input input").value;
+    weatherdetails(location);
+});
+</script> -->
+<script>
+const weatherdetails = async (name) => {
+    const apiKey = "f840528079bd6f4f09622d886162fa4e"; 
+    const apiurl = `https://api.openweathermap.org/data/2.5/weather?q=${name}&appid=${apiKey}&units=metric`;
+
+    const res = await fetch(apiurl);
+    const data = await res.json();
+
+    if (data.cod === 200) {
+        document.querySelector("#City").innerHTML = data.name;
+        document.querySelector("#temp").innerHTML = data.main.temp + "°C";
+        document.querySelector("#description").innerHTML = data.weather[0].description;
+        document.querySelector("#humidity").innerHTML = data.main.humidity + "%";
+        document.querySelector("#wind").innerHTML = data.wind.speed + " km/h";
+
+        let weatherType = data.weather[0].main.toLowerCase();
+        let iconPath = "images/";
+
+        if (weatherType.includes("cloud")) iconPath += "clouds.png";
+        else if (weatherType.includes("clear")) iconPath += "clear.png";
+        else if (weatherType.includes("rain")) iconPath += "rain.png";
+        else if (weatherType.includes("drizzle")) iconPath += "drizzle.png";
+        else if (weatherType.includes("mist")) iconPath += "mist.png";
+        else if (weatherType.includes("snow")) iconPath += "snow.png";
+        else iconPath += "clear.png";
+
+        document.querySelector("#weather-icon").src = iconPath;
+
+        document.querySelector("#error").style.display = "none";
+    } else {
+        document.querySelector("#error").style.display = "block";
+        document.querySelector("#error").innerHTML = "City name is invalid";
+    }
+}
+
+document.querySelector(".input button").addEventListener("click", () => {
+    const location = document.querySelector(".input input").value;
+    weatherdetails(location);
+});
+</script>
+
+</body>
+</html>
